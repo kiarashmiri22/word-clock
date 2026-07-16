@@ -1,0 +1,862 @@
+<!doctype html>
+<html lang="en" class="no-js" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- FIX: theme set before paint (no FOUC) + progressive-enhancement flag -->
+    <script>
+      (function () {
+        var d = document.documentElement;
+        d.classList.remove("no-js");
+        d.classList.add("js");
+        try {
+          var t =
+            localStorage.getItem("halden-theme") ||
+            (window.matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light");
+          d.setAttribute("data-theme", t);
+        } catch (e) {}
+      })();
+    </script>
+
+    <title>Halden — Word Clocks | Premium Edition</title>
+    <meta
+      name="description"
+      content="Handmade premium word clocks. Time told in language, not in numerals. Exquisite Danish design."
+    />
+
+    <link rel="canonical" href="https://haldenclocks.com/" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" id="meta-theme-color" content="#f8f6f2" />
+
+    <!-- OpenGraph -->
+    <meta
+      property="og:title"
+      content="Halden — Word Clocks | Premium Handmade Danish Design"
+    />
+    <meta
+      property="og:description"
+      content="A unique horological piece that tells time in sentences, not in numerals. Crafted with premium solid timber and precision-etched steel."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://haldenclocks.com/og-image.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- JSON-LD: Store -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Store",
+        "name": "Halden Word Clocks",
+        "image": "https://haldenclocks.com/og-image.jpg",
+        "description": "Handmade premium word clocks from Copenhagen.",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Studiestræde 42",
+          "addressLocality": "Copenhagen",
+          "postalCode": "1455",
+          "addressCountry": "DK"
+        },
+        "priceRange": "$$$"
+      }
+    </script>
+
+    <!-- JSON-LD: Products (rich results) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "itemListElement": [
+          {
+            "@type": "Product",
+            "name": "Nordic Oak Edition",
+            "image": "https://haldenclocks.com/images/1000493984.jpg",
+            "description": "Handmade word clock in solid Nordic oak.",
+            "brand": { "@type": "Brand", "name": "Halden" },
+            "offers": {
+              "@type": "Offer",
+              "price": "1240",
+              "priceCurrency": "EUR",
+              "availability": "https://schema.org/MadeToOrder"
+            }
+          },
+          {
+            "@type": "Product",
+            "name": "Smoked Walnut Edition",
+            "image": "https://haldenclocks.com/images/1000493985.jpg",
+            "description": "Handmade word clock in smoked European walnut.",
+            "brand": { "@type": "Brand", "name": "Halden" },
+            "offers": {
+              "@type": "Offer",
+              "price": "1450",
+              "priceCurrency": "EUR",
+              "availability": "https://schema.org/MadeToOrder"
+            }
+          },
+          {
+            "@type": "Product",
+            "name": "Brushed Brass & Oak",
+            "image": "https://haldenclocks.com/images/1000493986.jpg",
+            "description": "Handmade word clock in oak with a brushed brass face.",
+            "brand": { "@type": "Brand", "name": "Halden" },
+            "offers": {
+              "@type": "Offer",
+              "price": "1780",
+              "priceCurrency": "EUR",
+              "availability": "https://schema.org/MadeToOrder"
+            }
+          }
+        ]
+      }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/app.css" />
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to content</a>
+
+    <div class="loader" aria-hidden="true">
+      <div class="loader__logo">HALDEN</div>
+      <div class="loader__subtitle">Time in Language</div>
+    </div>
+
+    <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+      <a href="#main" class="nav__brand">Halden <em>Word Clocks</em></a>
+      <div class="nav__menu">
+        <a href="#about" class="nav__link">Philosophy</a>
+        <a href="#clock" class="nav__link">The Clock</a>
+        <a href="#collection" class="nav__link">Collection</a>
+        <a href="#process" class="nav__link">Process</a>
+        <a href="#faq" class="nav__link">FAQ</a>
+        <a href="#contact" class="nav__link">Contact</a>
+        <button
+          class="theme-toggle"
+          id="theme-toggle"
+          aria-label="Toggle color theme"
+        >
+          <svg class="sun-icon" style="display: none" viewBox="0 0 24 24">
+            <path
+              d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 7a5 5 0 100 10 5 5 0 000-10z"
+            />
+          </svg>
+          <svg class="moon-icon" viewBox="0 0 24 24">
+            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+          </svg>
+        </button>
+      </div>
+      <button
+        class="burger"
+        id="burger-btn"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+
+    <!-- Mobile Overlay Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+      <div class="mobile-menu__nav">
+        <a href="#about" class="mobile-menu__link">Philosophy</a>
+        <a href="#clock" class="mobile-menu__link">The Clock</a>
+        <a href="#collection" class="mobile-menu__link">Collection</a>
+        <a href="#process" class="mobile-menu__link">Process</a>
+        <a href="#faq" class="mobile-menu__link">FAQ</a>
+        <a href="#contact" class="mobile-menu__link">Contact</a>
+      </div>
+      <div class="mobile-menu__foot">
+        <button
+          class="theme-toggle"
+          id="mobile-theme-toggle"
+          aria-label="Toggle color theme"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+          >
+            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+          </svg>
+        </button>
+        <span class="label">Switch theme</span>
+      </div>
+    </div>
+
+    <main id="main">
+      <!-- Hero -->
+      <section class="hero reveal-up">
+        <div class="hero__top">
+          <div class="hero__label-text">
+            <span class="line-mask"
+              ><span class="inner" style="--i: 0"
+                >Time is not numbers</span
+              ></span
+            >
+            <span class="line-mask"
+              ><span class="inner" style="--i: 1">Time is language</span></span
+            >
+          </div>
+          <div class="luxury-logo">
+            <div class="logo-particles"></div>
+
+            <h1 id="logoText">
+              <span>V</span>
+              <span>I</span>
+              <span>N</span>
+              <span>D</span>
+              <span>E</span>
+              <span>C</span>
+              <span>O</span>
+            </h1>
+          </div>
+          <div class="hero__location">
+            <span class="line-mask"
+              ><span class="inner" style="--i: 0">Crafted in</span></span
+            >
+            <span class="line-mask"
+              ><span class="inner" style="--i: 1">Copenhagen</span></span
+            >
+          </div>
+        </div>
+
+        <div>
+          <h1 class="hero__title">
+            <span class="line-mask"
+              ><span class="inner" style="--i: 2">Told in language,</span></span
+            ><br />
+            <span class="line-mask"
+              ><span class="inner" style="--i: 3">not in numerals.</span></span
+            >
+          </h1>
+          <p class="hero__lede">
+            We believe that time should be read as a sentence, grounding you in
+            the present moment rather than chasing the seconds. A quiet
+            statement piece for standard-setting environments.
+          </p>
+
+          <div class="hero__cta">
+            <a href="#collection" class="btn btn--primary"
+              >Explore the Collection</a
+            >
+            <a href="#contact" class="btn btn--ghost">Request a Piece</a>
+          </div>
+
+          <dl class="hero__meta">
+            <div>
+              <dt>Material</dt>
+              <dd>Solid Oak <em>&amp; Steel</em></dd>
+            </div>
+            <div>
+              <dt>Edition</dt>
+              <dd>Series <em>No. 01</em></dd>
+            </div>
+            <div>
+              <dt>Status</dt>
+              <dd>Handmade to order</dd>
+            </div>
+            <div>
+              <dt>Delivery</dt>
+              <dd>World <em>Wide</em></dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <!-- About -->
+      <section class="about reveal-up" id="about">
+        <div class="about__inner">
+          <div class="about__left">
+            <div class="label" style="margin-bottom: 2rem">Our Philosophy</div>
+            <h2 class="about__large-text">
+              A typographic approach to temporal awareness.
+            </h2>
+            <p class="about__para">
+              Our handmade word clocks are engineered to alter how we interact
+              with the passing of hours. Strikingly physical yet inherently
+              minimalist, the timepiece removes the anxiety of ticks, and
+              instead frames the day in standard English literary syntax.
+            </p>
+            <p class="about__para">
+              Behind the precision-crafted solid oak casing and laser-etched
+              facade lies an array of high-grade, energy-efficient matrices
+              designed to wash the letters in a soft, atmospheric glow.
+            </p>
+            <p class="about__quote">&ldquo;Words instead of numbers.&rdquo;</p>
+          </div>
+          <div
+            class="about__image-container"
+            data-fallback="Interior / brand imagery"
+          >
+            <div class="skeleton"></div>
+            <img
+              class="about__image"
+              decoding="async"
+              loading="lazy"
+              src="./images/1000493983.jpg"
+              alt="A Halden word clock in a warm interior setting"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- Live Word Clock -->
+      <section class="clock-section reveal-up" id="clock">
+        <div class="section-head">
+          <div class="section-head__left">
+            <div class="label">Live Interactive</div>
+            <h2 class="section-head__title">The Active Matrix</h2>
+          </div>
+          <p class="section-head__desc">
+            Watch the matrix align in real-time. This preview synchronizes with
+            your current device time, precisely parsing letters to illuminate
+            correct temporal sentences.
+          </p>
+        </div>
+
+        <div class="clock">
+          <div
+            class="clock-grid"
+            id="word-clock-grid"
+            role="img"
+            aria-label="Word clock showing the current time in letters"
+          >
+            <span class="clock-cell">I</span><span class="clock-cell">T</span
+            ><span class="clock-cell">L</span><span class="clock-cell">I</span
+            ><span class="clock-cell">S</span><span class="clock-cell">A</span
+            ><span class="clock-cell">S</span><span class="clock-cell">T</span
+            ><span class="clock-cell">I</span><span class="clock-cell">M</span
+            ><span class="clock-cell">E</span> <span class="clock-cell">A</span
+            ><span class="clock-cell">C</span><span class="clock-cell">Q</span
+            ><span class="clock-cell">U</span><span class="clock-cell">A</span
+            ><span class="clock-cell">R</span><span class="clock-cell">T</span
+            ><span class="clock-cell">E</span><span class="clock-cell">R</span
+            ><span class="clock-cell">D</span><span class="clock-cell">C</span>
+            <span class="clock-cell">T</span><span class="clock-cell">W</span
+            ><span class="clock-cell">E</span><span class="clock-cell">N</span
+            ><span class="clock-cell">T</span><span class="clock-cell">Y</span
+            ><span class="clock-cell">F</span><span class="clock-cell">I</span
+            ><span class="clock-cell">V</span><span class="clock-cell">E</span
+            ><span class="clock-cell">X</span> <span class="clock-cell">H</span
+            ><span class="clock-cell">A</span><span class="clock-cell">L</span
+            ><span class="clock-cell">F</span><span class="clock-cell">S</span
+            ><span class="clock-cell">T</span><span class="clock-cell">E</span
+            ><span class="clock-cell">N</span><span class="clock-cell">F</span
+            ><span class="clock-cell">T</span><span class="clock-cell">O</span>
+            <span class="clock-cell">P</span><span class="clock-cell">A</span
+            ><span class="clock-cell">S</span><span class="clock-cell">T</span
+            ><span class="clock-cell">E</span><span class="clock-cell">R</span
+            ><span class="clock-cell">U</span><span class="clock-cell">N</span
+            ><span class="clock-cell">I</span><span class="clock-cell">N</span
+            ><span class="clock-cell">E</span> <span class="clock-cell">O</span
+            ><span class="clock-cell">N</span><span class="clock-cell">E</span
+            ><span class="clock-cell">S</span><span class="clock-cell">I</span
+            ><span class="clock-cell">X</span><span class="clock-cell">T</span
+            ><span class="clock-cell">H</span><span class="clock-cell">R</span
+            ><span class="clock-cell">E</span><span class="clock-cell">E</span>
+            <span class="clock-cell">F</span><span class="clock-cell">O</span
+            ><span class="clock-cell">U</span><span class="clock-cell">R</span
+            ><span class="clock-cell">F</span><span class="clock-cell">I</span
+            ><span class="clock-cell">V</span><span class="clock-cell">E</span
+            ><span class="clock-cell">T</span><span class="clock-cell">W</span
+            ><span class="clock-cell">O</span> <span class="clock-cell">E</span
+            ><span class="clock-cell">I</span><span class="clock-cell">G</span
+            ><span class="clock-cell">H</span><span class="clock-cell">T</span
+            ><span class="clock-cell">E</span><span class="clock-cell">L</span
+            ><span class="clock-cell">E</span><span class="clock-cell">V</span
+            ><span class="clock-cell">E</span><span class="clock-cell">N</span>
+            <span class="clock-cell">S</span><span class="clock-cell">E</span
+            ><span class="clock-cell">V</span><span class="clock-cell">E</span
+            ><span class="clock-cell">N</span><span class="clock-cell">T</span
+            ><span class="clock-cell">W</span><span class="clock-cell">E</span
+            ><span class="clock-cell">L</span><span class="clock-cell">V</span
+            ><span class="clock-cell">E</span> <span class="clock-cell">T</span
+            ><span class="clock-cell">E</span><span class="clock-cell">N</span
+            ><span class="clock-cell">S</span><span class="clock-cell">E</span
+            ><span class="clock-cell">O</span><span class="clock-cell">C</span
+            ><span class="clock-cell">L</span><span class="clock-cell">O</span
+            ><span class="clock-cell">C</span><span class="clock-cell">K</span>
+          </div>
+        </div>
+
+        <div class="clock-section__caption">
+          <div class="label">True Real-Time Parsing</div>
+          <div
+            class="label"
+            id="digital-clock"
+            style="color: var(--accent); font-weight: 500"
+            aria-live="off"
+          >
+            00:00:00
+          </div>
+        </div>
+      </section>
+
+      <!-- Collection -->
+      <section class="collection reveal-up" id="collection">
+        <div class="section-head">
+          <div class="section-head__left">
+            <div class="label">Handcrafted Models</div>
+            <h2 class="section-head__title">Series One</h2>
+          </div>
+          <p class="section-head__desc">
+            Offered in three beautifully curated materials. Each frame is
+            meticulously grain-matched and assembled completely in-house.
+          </p>
+        </div>
+
+        <div class="collection__grid">
+          <div
+            class="collection-card"
+            role="button"
+            tabindex="0"
+            data-title="Nordic Oak Edition"
+            data-price="€1,240 EUR"
+            data-img="./images/1000493984.jpg"
+            data-desc="Our signature model. Warm, pale Nordic oak with a hand-oiled finish that deepens beautifully with age. The letters glow with a soft, candle-like warmth."
+            data-specs="Solid Nordic oak · 45 × 45 cm · English matrix · Hand-oiled finish"
+          >
+            <div
+              class="collection-card__img-wrap"
+              data-fallback="Nordic Oak Edition"
+            >
+              <div class="skeleton"></div>
+              <img
+                class="collection-card__img"
+                decoding="async"
+                loading="lazy"
+                src="./images/1000493984.jpg"
+                alt="Nordic Oak Edition word clock"
+              />
+            </div>
+            <h3 class="collection-card__title">Nordic Oak Edition</h3>
+            <div class="collection-card__details">
+              <span class="collection-card__price">€1,240 EUR</span>
+              <span class="collection-card__cta">Quick view</span>
+            </div>
+          </div>
+
+          <div
+            class="collection-card"
+            role="button"
+            tabindex="0"
+            data-title="Smoked Walnut Edition"
+            data-price="€1,450 EUR"
+            data-img="./images/1000493985.jpg"
+            data-desc="A darker, more dramatic character. Smoked European walnut brings rich chocolate tones and a striking contrast against the illuminated syntax."
+            data-specs="Smoked European walnut · 45 × 45 cm · English matrix · Satin lacquer"
+          >
+            <div
+              class="collection-card__img-wrap"
+              data-fallback="Smoked Walnut Edition"
+            >
+              <div class="skeleton"></div>
+              <img
+                class="collection-card__img"
+                decoding="async"
+                loading="lazy"
+                src="./images/1000493985.jpg"
+                alt="Smoked Walnut Edition word clock"
+              />
+            </div>
+            <h3 class="collection-card__title">Smoked Walnut Edition</h3>
+            <div class="collection-card__details">
+              <span class="collection-card__price">€1,450 EUR</span>
+              <span class="collection-card__cta">Quick view</span>
+            </div>
+          </div>
+
+          <div
+            class="collection-card"
+            role="button"
+            tabindex="0"
+            data-title="Brushed Brass &amp; Oak"
+            data-price="€1,780 EUR"
+            data-img="./images/1000493986.jpg"
+            data-desc="Our flagship. A precision-etched, brushed brass face set within an oak frame — a true horological statement that patinas gracefully over decades."
+            data-specs="Brushed brass on oak · 45 × 45 cm · English matrix · Limited run"
+          >
+            <div
+              class="collection-card__img-wrap"
+              data-fallback="Brushed Brass &amp; Oak"
+            >
+              <div class="skeleton"></div>
+              <img
+                class="collection-card__img"
+                decoding="async"
+                loading="lazy"
+                src="./images/1000493986.jpg"
+                alt="Brushed Brass and Oak word clock"
+              />
+            </div>
+            <h3 class="collection-card__title">Brushed Brass &amp; Oak</h3>
+            <div class="collection-card__details">
+              <span class="collection-card__price">€1,780 EUR</span>
+              <span class="collection-card__cta">Quick view</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Process -->
+      <section class="process reveal-up" id="process">
+        <div class="section-head">
+          <div class="section-head__left">
+            <div class="label">The Craft</div>
+            <h2 class="section-head__title">Made by hand, designed to last.</h2>
+          </div>
+          <p class="section-head__desc">
+            We respect materials. Every component is intentionally chosen for
+            its durability, tactile pleasure, and environmental sustainability.
+          </p>
+        </div>
+
+        <div class="process__grid">
+          <div class="process__item">
+            <div class="process__num">01 / Millwork</div>
+            <div
+              class="process__image-wrap"
+              data-fallback="Sourcing raw timber"
+            >
+              <div class="skeleton"></div>
+              <img
+                class="process__image"
+                decoding="async"
+                loading="lazy"
+                src="./images/1000493988.jpg"
+                alt="Milling hardwood"
+              />
+            </div>
+            <h3 class="process__caption">Sourcing raw timber</h3>
+            <p class="label" style="text-transform: none">
+              FSC Certified European Oak &amp; Walnut
+            </p>
+          </div>
+          <div class="process__item">
+            <div class="process__num">02 / Electronics</div>
+            <div
+              class="process__image-wrap"
+              data-fallback="Hand-soldered matrix"
+            >
+              <div class="skeleton"></div>
+              <img
+                class="process__image"
+                decoding="async"
+                loading="lazy"
+                src="./images/1000493990.jpg"
+                alt="Precision electronics"
+              />
+            </div>
+            <h3 class="process__caption">Hand-soldered Matrix</h3>
+            <p class="label" style="text-transform: none">
+              Ultra-efficient components built to last decades
+            </p>
+          </div>
+          <div class="process__item">
+            <div class="process__num">03 / Calibration</div>
+            <div
+              class="process__image-wrap"
+              data-fallback="Final assembly &amp; test"
+            >
+              <div class="skeleton"></div>
+              <img
+                class="process__image"
+                decoding="async"
+                loading="lazy"
+                src="./images/1000493991.jpg"
+                alt="Assembling final piece"
+              />
+            </div>
+            <h3 class="process__caption">Final assembly &amp; test</h3>
+            <p class="label" style="text-transform: none">
+              Individually calibrated and signed by the maker
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Testimonials -->
+      <section class="testimonials reveal-up">
+        <div class="testimonials__inner">
+          <div class="testimonials__track">
+            <blockquote class="t-slide active">
+              <p class="testimonials__quote">
+                "An absolutely stunning work of art. It completely changes the
+                cadence of our living room. It's more of a sculptural presence
+                than a timekeeper."
+              </p>
+              <div class="testimonials__author">Elena K. — Copenhagen</div>
+            </blockquote>
+            <blockquote class="t-slide">
+              <p class="testimonials__quote">
+                "The craftsmanship is faultless. Guests always ask about it, and
+                reading the time as a sentence has genuinely made me calmer."
+              </p>
+              <div class="testimonials__author">Marcus L. — Berlin</div>
+            </blockquote>
+            <blockquote class="t-slide">
+              <p class="testimonials__quote">
+                "Worth every euro. The walnut grain and the soft glow at night
+                are simply beautiful. A future heirloom."
+              </p>
+              <div class="testimonials__author">Sofia R. — Milan</div>
+            </blockquote>
+          </div>
+          <div
+            class="testimonials__dots"
+            role="tablist"
+            aria-label="Testimonials"
+          >
+            <button class="t-dot active" aria-label="Testimonial 1"></button>
+            <button class="t-dot" aria-label="Testimonial 2"></button>
+            <button class="t-dot" aria-label="Testimonial 3"></button>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section class="faq reveal-up" id="faq">
+        <div class="section-head">
+          <div class="section-head__left">
+            <div class="label">Good to know</div>
+            <h2 class="section-head__title">Frequently asked</h2>
+          </div>
+          <p class="section-head__desc">
+            Everything about ordering, customisation, and living with a Halden
+            word clock. Still unsure? We are one message away.
+          </p>
+        </div>
+
+        <div class="faq__list">
+          <details class="faq__item">
+            <summary>
+              How long does each clock take to make?<span
+                class="faq__icon"
+              ></span>
+            </summary>
+            <p class="faq__answer">
+              Every piece is handmade to order. Production typically takes 4–6
+              weeks, followed by insured worldwide shipping. You'll receive
+              updates at each stage of the build.
+            </p>
+          </details>
+          <details class="faq__item">
+            <summary>
+              Can I customise the wood, size, or language?<span
+                class="faq__icon"
+              ></span>
+            </summary>
+            <p class="faq__answer">
+              Yes. Beyond the three standard editions we offer bespoke sizes,
+              alternative timbers, and matrices in several languages. Mention
+              your wishes in the inquiry form and we'll prepare a quote.
+            </p>
+          </details>
+          <details class="faq__item">
+            <summary>
+              What is the warranty and after-care?<span
+                class="faq__icon"
+              ></span>
+            </summary>
+            <p class="faq__answer">
+              Each Halden clock is covered by a 5-year warranty on electronics
+              and craftsmanship. The matrix components are rated for decades of
+              continuous use, and we offer lifetime servicing.
+            </p>
+          </details>
+          <details class="faq__item">
+            <summary>
+              Do you ship worldwide, and what about returns?<span
+                class="faq__icon"
+              ></span>
+            </summary>
+            <p class="faq__answer">
+              We ship worldwide with fully insured, tracked carriers. As pieces
+              are made to order, we accept returns within 14 days of delivery
+              for standard editions in original condition.
+            </p>
+          </details>
+        </div>
+      </section>
+
+      <!-- Contact -->
+      <section class="contact reveal-up" id="contact">
+        <div class="contact__inner">
+          <div class="contact__info">
+            <div>
+              <div class="label" style="margin-bottom: 2rem">
+                Acquire &amp; Inquire
+              </div>
+              <h2 class="contact__title">Bring Halden into your space.</h2>
+            </div>
+            <div class="contact__details">
+              <div class="contact__detail-item">
+                General inquiry
+                <a href="mailto:hello@haldenclocks.com"
+                  >hello@haldenclocks.com</a
+                >
+              </div>
+              <div class="contact__detail-item">
+                Copenhagen Atelier
+                <a href="https://maps.google.com" target="_blank" rel="noopener"
+                  >Studiestræde 42, KBH K</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Set your Formspree ID in the action below to enable sending -->
+          <form
+            class="contact-form"
+            id="contact-form"
+            action="https://formspree.io/f/YOUR_FORM_ID_HERE"
+            method="POST"
+          >
+            <div class="form-group">
+              <input
+                type="text"
+                id="name"
+                name="name"
+                class="form-input"
+                placeholder=" "
+                required
+              />
+              <label for="name" class="form-label">Full Name</label>
+            </div>
+            <div class="form-group">
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="form-input"
+                placeholder=" "
+                required
+              />
+              <label for="email" class="form-label">Email Address</label>
+            </div>
+            <div class="form-group">
+              <input
+                type="text"
+                id="model-interest"
+                name="model"
+                class="form-input"
+                placeholder=" "
+              />
+              <label for="model-interest" class="form-label"
+                >Model of Interest</label
+              >
+            </div>
+            <div class="form-group">
+              <textarea
+                id="message"
+                name="message"
+                class="form-input"
+                rows="4"
+                placeholder=" "
+                style="resize: none"
+                required
+              ></textarea>
+              <label for="message" class="form-label">Your message</label>
+            </div>
+            <button type="submit" class="form-btn">Send Inquiry</button>
+            <p
+              class="form-status"
+              id="form-status"
+              role="status"
+              aria-live="polite"
+            ></p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <!-- Product Quick-View Modal -->
+    <div
+      class="modal"
+      id="product-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
+      aria-hidden="true"
+    >
+      <div class="modal__backdrop" data-close></div>
+      <div class="modal__panel">
+        <button class="modal__close" data-close aria-label="Close quick view">
+          &times;
+        </button>
+        <div class="modal__grid">
+          <div
+            class="modal__img-wrap"
+            id="modal-img-wrap"
+            data-fallback="Product image"
+          >
+            <img id="modal-img" src="" alt="" />
+          </div>
+          <div class="modal__body">
+            <div class="label">Series One · Handmade to order</div>
+            <h3 class="modal__title" id="modal-title"></h3>
+            <p class="modal__desc" id="modal-desc"></p>
+            <div class="modal__specs" id="modal-specs"></div>
+            <div class="modal__foot">
+              <span class="modal__price" id="modal-price"></span>
+              <a href="#contact" class="btn btn--primary" data-close
+                >Inquire to Order</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <h3>Halden</h3>
+          <p>
+            A quiet rebellion against digital noise. Danish design, built by
+            hand, celebrating standard syntax.
+          </p>
+        </div>
+        <div>
+          <h4 class="footer__links-title">Explore</h4>
+          <ul class="footer__links-list">
+            <li><a href="#about">Our Philosophy</a></li>
+            <li><a href="#clock">The Active Grid</a></li>
+            <li><a href="#collection">Collection Series 01</a></li>
+            <li><a href="#process">Our Process</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__links-title">Legal &amp; Press</h4>
+          <ul class="footer__links-list">
+            <li><a href="#">Technical Documentation</a></li>
+            <li><a href="#">Press Kit</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copy">build with :) by Kiarash for VINDECO</p>
+        <p class="footer__copy">COPENHAGEN, DENMARK</p>
+      </div>
+    </footer>
+    <script src="./js/app.js"></script>
+  </body>
+</html>
